@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference person;
     EditText eFullname, eGender, eAge;
     TextView tFullname, tGender, tAge;
-    ArrayList<String> keyList;
-    int index;
+    ArrayList<String> keyList, names;
+    int index, size, a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         tAge = findViewById(R.id.displayAge);
         tGender = findViewById(R.id.displayGender);
         keyList = new ArrayList<>();
+        names = new ArrayList<>();
     }
 
     @Override
@@ -51,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
                 for(DataSnapshot ss: dataSnapshot.getChildren()) {
                     keyList.add(ss.getKey());
                 }
+                size = (int) dataSnapshot.getChildrenCount() - 1;
+
+                for(int num = 0; num <= size; num++){
+                    String getName = dataSnapshot.child(keyList.get(num)).child("fullname").getValue().toString();
+                    names.add(getName);
+
+                }
+
             }
 
             @Override
@@ -63,21 +72,29 @@ public class MainActivity extends AppCompatActivity {
     public void saveRecord(View v){
         if(v.getId()==R.id.saveBtn) {
             String fullname, gender;
+            Boolean a = true;
             int age;
             try {
-
                 fullname = eFullname.getText().toString();
                 age = Integer.parseInt(eAge.getText().toString());
                 gender = eGender.getText().toString();
 
-                Person p_info = new Person(fullname, age, gender);
-                String key = person.push().getKey();
-                person.child(key).setValue(p_info);
-                keyList.add(key);
-
-                Toast.makeText(this, "Record saved", Toast.LENGTH_LONG).show();
-
-
+                for(int nameList = 0; nameList < names.size(); nameList++){
+                    String checkName = names.get(nameList);
+                    if(checkName.equalsIgnoreCase(fullname)){
+                        a = false;
+                    }
+                }
+                if(a == false){
+                    Toast.makeText(this, "Fullname exists", Toast.LENGTH_LONG).show();
+                }else{
+                    String key = person.push().getKey();
+                    Person p_info = new Person(fullname, age, gender);
+                    person.child(key).setValue(p_info);
+                    keyList.add(key);
+                    names.add(fullname);
+                    Toast.makeText(this, "Record saved", Toast.LENGTH_LONG).show();
+                }
             } catch (Exception e) {
                 Toast.makeText(this, "Error saving data", Toast.LENGTH_LONG).show();
             }
@@ -85,15 +102,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayInfo(View v){
-
+        String fullname;
+        fullname = eFullname.getText().toString();
+        for(int nameList = 0; nameList < names.size(); nameList++){
+            String checkName = names.get(nameList);
+            if(checkName.equals(fullname)){
+                 a = nameList;
+            }
+        }
             person.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    index = (int) dataSnapshot.getChildrenCount() - 1;
 
-                    String personName = dataSnapshot.child(keyList.get(index)).child("fullname").getValue().toString();
-                    String personAge = dataSnapshot.child(keyList.get(index)).child("age").getValue().toString();
-                    String personGender = dataSnapshot.child(keyList.get(index)).child("gender").getValue().toString();
+//                    index = (int) dataSnapshot.getChildrenCount() - 1;
+
+                    String personName = dataSnapshot.child(keyList.get(a)).child("fullname").getValue().toString();
+                    String personAge = dataSnapshot.child(keyList.get(a)).child("age").getValue().toString();
+                    String personGender = dataSnapshot.child(keyList.get(a)).child("gender").getValue().toString();
 
                    tFullname.setText(personName);
                    tAge.setText(personAge);
