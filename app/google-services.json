@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "313486408952",
+    "firebase_url": "https://buenafeapriljoylab9.firebaseio.com",
+    "project_id": "buenafeapriljoylab9",
+    "storage_bucket": "buenafeapriljoylab9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313486408952:android:928fc19d85b0c3b3",
+        "android_client_info": {
+          "package_name": "com.buenafe.apriljoy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313486408952-1igvhlc4ppk490li5pmk0armilfrl74q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.buenafe.apriljoy",
+            "certificate_hash": "a3cf425438573f5b4f87762af7850b1b7eb07e42"
+          }
+        },
+        {
+          "client_id": "313486408952-vvnktg3fg94fkqju22i6qtvn5e8tm05e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjvBpHHFsR5d_Io897h-zvkROE8PJu-HM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313486408952-vvnktg3fg94fkqju22i6qtvn5e8tm05e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
