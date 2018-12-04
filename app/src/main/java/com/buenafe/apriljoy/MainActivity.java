@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     EditText eFullname, eGender, eAge;
     TextView tFullname, tGender, tAge;
     ArrayList<String> keyList, names;
-    int index, size, a;
+    int index, size, a=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,19 +110,19 @@ public class MainActivity extends AppCompatActivity {
                  a = nameList;
             }
         }
+
+        if(a!=0) {
             person.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-//                    index = (int) dataSnapshot.getChildrenCount() - 1;
-
                     String personName = dataSnapshot.child(keyList.get(a)).child("fullname").getValue().toString();
                     String personAge = dataSnapshot.child(keyList.get(a)).child("age").getValue().toString();
                     String personGender = dataSnapshot.child(keyList.get(a)).child("gender").getValue().toString();
-
-                   tFullname.setText(personName);
-                   tAge.setText(personAge);
-                   tGender.setText(personGender);
+                    a = 0;
+                    tFullname.setText(personName);
+                    tAge.setText(personAge);
+                    tGender.setText(personGender);
                 }
 
                 @Override
@@ -130,5 +130,9 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+        }else{
+            Toast.makeText(this,"Record does not exist", Toast.LENGTH_LONG).show();
+        }
+
     }
 }
